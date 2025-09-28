@@ -53,20 +53,20 @@ select SURNAME, NAME, KURS from student
       and CITY = 'Воронеж';
 
 --11. Какие данные будут получены в результате выполнения запроса?
---SELECT *
---FROM STUDENT
---WHERE (STIPEND < 100 OR
---NOT (BIRTHDAY >= '10/03/1980'
---AND STUDENT_ID > 1003));
+SELECT *
+FROM STUDENT
+WHERE (STIPEND < 100 OR
+NOT (BIRTHDAY >= '10/03/1980'
+AND STUDENT_ID > 1003));
 
 -- Все студенты со стипендией меньше 100 или родившихся позже 10 марта 1980 года и с ID больше 1003.
 
 --12. Какие данные будут получены в результате выполнения запроса?
---SELECT *
---FROM STUDENT
---WHERE NOT ((BIRTHDAY = '10/03/1980' OR
---STIPEND > 100)
---AND STUDENT_ID >= 1003);
+SELECT *
+FROM STUDENT
+WHERE NOT ((BIRTHDAY = '10/03/1980' OR
+STIPEND > 100)
+AND STUDENT_ID >= 1003);
 
 -- 
 
