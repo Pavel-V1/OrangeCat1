@@ -60,7 +60,10 @@ SELECT q.STUDENT_ID, MIN(MARK)
 --4. Напишите запрос, который для каждого студента выполняет вы-
 --борку его идентификатора и максимальной из полученных им
 --оценок.
-
+SELECT STUDENT_ID, max(MARK)
+    from EXAM_MARKS
+        GROUP BY STUDENT_ID
+        order by STUDENT_ID;
 
 --5. Напишите запрос, выполняющий вывод первой по алфавиту фа-
 --милии студента, начинающейся на букву ‘И’.
@@ -183,4 +186,12 @@ select count(*)
 select count(exam_id)
   from exam_marks
  where student_id = 32
+
    and mark >= 3;
+
+--
+SELECT
+    COUNT(*) as total_rows,
+    COUNT(city) AS non_null_cities,
+    COUNT(DISTINCT city) AS unique_cities
+FROM student;
