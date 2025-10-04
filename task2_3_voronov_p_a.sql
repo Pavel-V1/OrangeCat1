@@ -260,7 +260,6 @@ select count(*)
 select count(exam_id)
   from exam_marks
  where student_id = 32
-
    and mark >= 3;
 
 -----
