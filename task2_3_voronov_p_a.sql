@@ -90,28 +90,60 @@ select exam_date,
 
 --8. Напишите запрос, выдающий средний балл для каждого
 --студента.
+SELECT q.student_id AS st
+	 , ROUND(AVG(q.mark), 2)
+FROM exam_marks q
+GROUP BY st
+ORDER BY st;
 
 --9. Напишите запрос, выдающий средний балл для каждого
 --экзамена.
+SELECT (exam_date, subj_id) AS ex
+	   , ROUND(AVG(mark), 2)
+FROM exam_marks
+GROUP BY ex;
 
 --10. Напишите запрос, определяющий количество сдававших студен-
 --тов для каждого экзамена.
+SELECT subj_id, COUNT(student_id)
+FROM exam_marks
+GROUP BY subj_id, exam_date;
 
 --11. Напишите запрос для определения количества предметов, изучаемых на каждом курсе.
+SELECT semester, COUNT(DISTINCT subj_id)
+FROM subject
+GROUP BY semester;
 
 --12. Для каждого университета напишите запрос, 
 --выводящий суммарную стипендию обучающихся в нем студентов, с последующей
 --сортировкой списка по этому значению.
+SELECT univ_id, SUM(stipend)
+FROM student
+GROUP BY univ_id
+ORDER BY univ_id;
 
 --13. Для каждого семестра напишите запрос, выводящий общее
 --количество часов, отводимое на изучение соответствующих
 --предметов.
+SELECT s.semester, SUM(s.hour)
+FROM subject s
+GROUP BY semester
+ORDER BY semester;
 
 --14. Для каждого студента напишите запрос, выводящий среднее зна-
 --чение оценок, полученных им на всех экзаменах.
+SELECT student_id
+	   , AVG(mark)
+FROM exam_marks
+GROUP BY student_id
+ORDER BY student_id;
 
 --15. Для каждого студента напишите запрос, выводящий среднее зна-
 --чение оценок, полученных им по каждому предмету.
+SELECT student_id, subj_id, ROUND(AVG(mark)) AS avg_mark
+FROM exam_marks
+GROUP BY student_id, subj_id
+ORDER BY student_id, subj_id;
 
 --16. Напишите запрос, выводящий количество студентов, проживаю-
 --щих в каждом городе. Список отсортировать в порядке убывания
@@ -126,6 +158,11 @@ SELECT CITY, count(distinct STUDENT_ID) as cnt
 --17. Для каждого университета напишите запрос, выводящий количе-
 --ство обучающихся в нем студентов, с последующей сортировкой
 --списка по этому количеству.
+SELECT univ_id, COUNT(student_id) AS cat
+FROM student
+WHERE univ_id IS NOT NULL
+GROUP BY univ_id
+ORDER BY cat;
 
 --18. Для каждого университета напишите запрос, выводящий коли-
 --чество работающих в нем преподавателей, с последующей сорти-
@@ -151,24 +188,61 @@ order by UNIV_ID, KURS;
 --20. Для каждого города напишите запрос, выводящий максимальный
 --рейтинг университетов, в нем расположенных, с последующей
 --сортировкой списка по значениям рейтингов.
+SELECT max(rating)
+	 , city
+FROM university
+GROUP BY city
+ORDER BY max(rating);
 
 --21. Для каждого дня сдачи экзаменов напишите запрос, выводящий
 --среднее значение всех экзаменационных оценок.
+SELECT exam_date
+	 , round(avg(mark), 2)
+FROM exam_marks
+GROUP BY exam_date
+ORDER BY exam_date;
 
 --22. Для каждого дня сдачи экзаменов напишите запрос, выводящий
 --максимальные оценки, полученные по каждому предмету.
+SELECT exam_date
+	 , subj_id
+	 , max(mark) AS max_mark
+FROM exam_marks
+GROUP BY exam_date, subj_id
+ORDER BY exam_date, subj_id;
 
 --23. Для каждого дня сдачи экзаменов напишите запрос, выводящий
 --общее количество студентов, сдававших экзамены.
+SELECT exam_date
+	 , COUNT(student_id) AS count_of_stud
+FROM exam_marks
+GROUP BY exam_date
+ORDER BY exam_date;
 
 --24. Для каждого дня сдачи экзаменов напишите запрос, выводящий
 --общее количество экзаменов, сдававшихся каждым студентом.
+SELECT exam_date
+	 , student_id
+	 , COUNT(exam_id)
+FROM exam_marks
+GROUP BY exam_date, student_id
+ORDER BY exam_date, student_id;
 
 --25. Для каждого преподавателя напишите запрос, выводящий коли-
 --чество преподаваемых им предметов.
+SELECT lecturer_id
+	 , count(subj_id)
+FROM subj_lect
+GROUP BY lecturer_id
+ORDER BY lecturer_id;
 
 --26. Для каждого предмета напишите запрос, выводящий количество
 --преподавателей, ведущих по нему занятия.
+SELECT subj_id
+	 , count(lecturer_id)
+FROM subj_lect
+GROUP BY subj_id
+ORDER BY subj_id;
 
 --27. Напишите запрос, выполняющий вывод количества студентов,
 --имеющих только отличные оценки.
@@ -189,9 +263,9 @@ select count(exam_id)
 
    and mark >= 3;
 
---
-SELECT
-    COUNT(*) as total_rows,
-    COUNT(city) AS non_null_cities,
-    COUNT(DISTINCT city) AS unique_cities
-FROM student;
+-----
+-- SELECT
+--     COUNT(*) as total_rows,
+--     COUNT(city) AS non_null_cities,
+--     COUNT(DISTINCT city) AS unique_cities
+-- FROM student;
