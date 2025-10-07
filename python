@@ -1,12 +1,20 @@
-def get_number(prompt):
-    while True:
-        try:
-            number = float(input(prompt))
-            if number.is_integer():
-                return int(number)
-            return number
-        except ValueError:
-            print("Это не число! Пожалуйста, введите число.")
+import re
+
+
+def calculate(num1, num2, operation):
+    result = None
+    if operation == '+':
+        result = num1 + num2
+    elif operation == '-':
+        result = num1 - num2
+    elif operation == '*':
+        result = num1 * num2
+    elif operation == '/':
+        if num2 == 0:
+            print("На ноль делить нельзя!")
+        else:
+            result = num1 / num2
+    return result
 
 
 def get_operation():
@@ -30,38 +38,41 @@ def get_operation():
     return operation
 
 
-def calculate(num1, num2, operation):
-    result = None
-    if operation == '+':
-        result = num1 + num2
-    elif operation == '-':
-        result = num1 - num2
-    elif operation == '/':
-        try:
-            result = num1 / num2
-        except ZeroDivisionError:
-            result = "Деление на ноль запрещено"
-    elif operation == '*':
-        result = num1 * num2
-    return result
+def get_number(prompt):
+    pattern = r"^-?\d+(\.\d+)?$$"
+    pattern_int = r"^[+-]?\d+\.?\d+$"
+    while True:
+        print(prompt)
+        number = input()
+        for i in number:
+            if i not in '0123456789.':
+                print("Это не число! Пожалуйста, введите число.")
+                break
+            elif not re.match(pattern, number):
+                print("Пожалуйста, введите корректное число.")
+                break
+            elif re.match(pattern_int, number):
+                return int(number)
+            else:
+                return float(number)
 
 
-def main(DEBUG = "off"):
-  if DEBUG = "off":
-    num1 = get_number("Введите первое число: ")
-    num2 = get_number("Введите второе число: ")
-    operation = get_operation()
-    result = calculate(num1, num2, operation)
-    print("Результат:", result)
-  elif DEBUG = "on":
-    num1 = get_number("Введите первое число: ")
-    print("Первое число:", num1)
-    num2 = get_number("Введите второе число: ")
-    print("Второе число:", num2)
-    operation = get_operation()
-    print("Операция:", operation)
-    result = calculate(num1, num2, operation)
-    print("Результат:", result)
+def main():
+    # if dbg == 'off':
+        num1 = get_number("Введите первое число: ")
+        num2 = get_number("Введите второе число: ")
+        operation = get_operation()
+        result = calculate(num1, num2, operation)
+        print("Результат:", result)
+    # elif dbg == 'on':
+    #     num1 = get_number("Введите первое число: ")
+    #     print("Первое число:", num1)
+    #     num2 = get_number("Введите второе число: ")
+    #     print("Второе число:", num2)
+    #     operation = get_operation()
+    #     print("Операция:", operation)
+    #     result = calculate(num1, num2, operation)
+    #     print("Результат:", result)
 
 
 main()
@@ -69,5 +80,7 @@ while True:
     decision = (input('Продолжить? (да/нет) ')).lower()
     if decision == 'да':
         main()
+    # elif decision == 'отл':
+    #     main(dbg='on')
     elif decision == 'нет':
         break
