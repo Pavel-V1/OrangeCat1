@@ -19,15 +19,15 @@ def calculate(num1, num2, operation):
 
 def get_operation():
     message = '''
-Выберете математическую операцию:
-
-+ : Сложение
-- : Вычитание
-/ : Деление
-* : Умножение
-
-Ваш выбор:
-'''
+        Выберете математическую операцию:
+        
+        + : Сложение
+        - : Вычитание
+        / : Деление
+        * : Умножение
+        
+        Ваш выбор:
+        '''
 
     correct_operations = '+-/*'
     operation = input(message)
@@ -57,30 +57,31 @@ def get_number(prompt):
                 return float(number)
 
 
-def main():
-    # if dbg == 'off':
+def main(dbg='off'):
+    if dbg == 'off':
         num1 = get_number("Введите первое число: ")
         num2 = get_number("Введите второе число: ")
         operation = get_operation()
         result = calculate(num1, num2, operation)
         print("Результат:", result)
-    # elif dbg == 'on':
-    #     num1 = get_number("Введите первое число: ")
-    #     print("Первое число:", num1)
-    #     num2 = get_number("Введите второе число: ")
-    #     print("Второе число:", num2)
-    #     operation = get_operation()
-    #     print("Операция:", operation)
-    #     result = calculate(num1, num2, operation)
-    #     print("Результат:", result)
+    elif dbg == 'on':
+        num1 = get_number("Введите первое число: ")
+        print("Первое число:", num1)
+        num2 = get_number("Введите второе число: ")
+        print("Второе число:", num2)
+        operation = get_operation()
+        print("Операция:", operation)
+        result = calculate(num1, num2, operation)
+        print("производится операция", num1, operation, num2, "=", result)
+        print("Результат:", result)
 
 
-main()
+main(dbg='off')
 while True:
     decision = (input('Продолжить? (да/нет) ')).lower()
     if decision == 'да':
-        main()
-    # elif decision == 'отл':
-    #     main(dbg='on')
+        main(dbg='off')
     elif decision == 'нет':
         break
+    elif decision == 'отл':
+        main(dbg='on')
