@@ -35,7 +35,7 @@ def play_game():
     correct_predictions = 0
     for i in range(num_trials):
         user_console_input = input("Введите число (0 или 1): ")
-        if user_console_input.lower() == "":
+        if not user_console_input:
             print("Пожалуйста, введите число.")
             continue
         user_input = int(user_console_input)
@@ -55,6 +55,7 @@ def play_game():
             history.pop(0)
         accuracy = correct_predictions / (i + 1)
         print("Точность:", accuracy)
+    print('Количество попыток закончилось, хорошего дня :)')
 
 
 play_game()
