@@ -33,6 +33,7 @@ def train(a1, b1, a2, b2, a3):
 def play_game():
     num_trials = 100 # Количество попыток
     correct_predictions = 0
+    c = 0
     for i in range(num_trials):
         user_console_input = input("Введите число (0 или 1): ")
         if not user_console_input:
@@ -44,6 +45,8 @@ def play_game():
             print("Пожалуйста, введите корректное число.")
             continue
         print("Предсказание машины:", machine_prediction)
+        if machine_prediction != 2:
+            c += 1
         if machine_prediction == user_input:
             correct_predictions += 1
         if len(history) >= 2:
@@ -53,7 +56,10 @@ def play_game():
         history.append((user_input, machine_prediction))
         if len(history) > 3:
             history.pop(0)
-        accuracy = correct_predictions / (i + 1)
+        if c == 0:
+            accuracy = 0
+        else:
+            accuracy = correct_predictions / (c + 1)
         print("Точность:", accuracy)
     print('Количество попыток закончилось, хорошего дня :)')
 
